@@ -83,5 +83,3 @@ class PartyGames(commands.Cog):
                     score += 1
                     await response.add_reaction("✅")
                     break
-                else:
-                    await response.add_reaction("❌")
