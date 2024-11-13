@@ -1,4 +1,3 @@
-
 import discord
 from redbot.core import commands
 from redbot.core import Config
@@ -51,7 +50,7 @@ class PartyGames(commands.Cog):
             words = json.load(f)
         return set(words)
 
-    @commands.command(name="solopractice")
+    @commands.command(name="bpsolo")
     async def solo_practice(self, ctx: commands.Context):
         """Start a solo practice mode where the user guesses words containing a random 3-letter sequence."""
         
@@ -64,23 +63,25 @@ class PartyGames(commands.Cog):
             prompt = random.choice(prompts)
             await ctx.send(f"Your prompt is: **{prompt}**. Type a word containing this sequence or 'quit' to exit.")
 
-            try:
-                response = await self.bot.wait_for(
-                    "message",
-                    timeout=60.0,
-                    check=lambda message: message.author == ctx.author and message.channel == ctx.channel
-                )
-            except asyncio.TimeoutError:
-                await ctx.send("Time's up! You took too long to respond. Exiting solo practice mode.")
-                break
+            while True:
+                try:
+                    response = await self.bot.wait_for(
+                        "message",
+                        timeout=60.0,
+                        check=lambda message: message.author == ctx.author and message.channel == ctx.channel
+                    )
+                except asyncio.TimeoutError:
+                    await ctx.send("Time's up! You took too long to respond. Exiting solo practice mode.")
+                    return
 
-            if response.content.lower() == "quit":
-                await ctx.send(f"Exiting solo practice mode. Your final score is: {score}. Thanks for playing!")
-                break
+                if response.content.lower() == "quit":
+                    await ctx.send(f"Exiting solo practice mode. Your final score is: {score}. Thanks for playing!")
+                    return
 
-            guess = response.content.lower()
-            if prompt.lower() in guess and guess in self.words:
-                score += 1
-                await ctx.send(f"Good job! '{guess}' is a valid word containing {prompt}. Your current score is: {score}.")
-            else:
-                await ctx.send(f"'{guess}' is either invalid or doesn't contain {prompt}. Try again or type 'quit' to exit.")
+                guess = response.content.lower()
+                if prompt.lower() in guess and guess in self.words:
+                    score += 1
+                    await response.add_reaction("✅")
+                    break
+                else:
+                    await response.add_reaction("❌")
