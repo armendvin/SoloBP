@@ -1,7 +1,7 @@
 {
     "author" : ["armendvin"],
     "install_msg" : "This cog is a fork of the partygames cog by Flame442 to allow for solo practice. Modified by armendvin",
-    "name" : "Solo-BP",
+    "name" : "SoloBP",
     "short" : "Chat games focused on coming up with words from 3 letters.",
     "requirements" : [],
     "description" : "-",
