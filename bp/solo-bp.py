@@ -33,9 +33,9 @@ CHARS = {
     ],
 }
 
-_ = Translator('PartyGames', __file__)
+_ = Translator('SoloBP', __file__)
 
-class PartyGames(commands.Cog):
+class SoloBP(commands.Cog):
     """Chat games focused on solo word guessing from 3 letters."""
     
     def __init__(self, bot):
@@ -50,7 +50,7 @@ class PartyGames(commands.Cog):
             words = json.load(f)
         return set(words)
 
-    @commands.command(name="bpsolo")
+    @commands.command(name="solobp")
     async def solo_practice(self, ctx: commands.Context):
         """Start a solo practice mode where the user guesses words containing a random 3-letter sequence."""
         
