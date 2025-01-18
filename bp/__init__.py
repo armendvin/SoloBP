@@ -1,6 +1,6 @@
-from .partygames import PartyGames
+from .solo-bp import SoloBP
 
 __red_end_user_data_statement__ = 'This cog does not store user data.'
 
 async def setup(bot):
-	await bot.add_cog(PartyGames(bot))
+	await bot.add_cog(SoloBP(bot))
