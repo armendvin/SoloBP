@@ -58,10 +58,11 @@ class PartyGames(commands.Cog):
 
         prompts = CHARS.get("en-US", [])
         score = 0
+        used_words = set()
 
         while True:
             prompt = random.choice(prompts)
-            await ctx.send(f"Your prompt is: **{prompt}**. Type a word containing this sequence or 'quit' to exit.")
+            await ctx.send(f"Type a word containing: **{prompt}**. Type **quit** to stop the game.")
 
             while True:
                 try:
@@ -79,7 +80,14 @@ class PartyGames(commands.Cog):
                     return
 
                 guess = response.content.lower()
+                if guess in used_words:
+                    await response.add_reaction("❌")
+                    continue 
+
                 if prompt.lower() in guess and guess in self.words:
+                    used_words.add(guess)
                     score += 1
                     await response.add_reaction("✅")
                     break
+                else:
+                    await response.add_reaction("❌")
