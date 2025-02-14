@@ -82,12 +82,10 @@ class SoloBP(commands.Cog):
                 guess = response.content.lower()
                 if guess in used_words:
                     await response.add_reaction("❌")
-                    continue 
+                    continue
 
                 if prompt.lower() in guess and guess in self.words:
                     used_words.add(guess)
                     score += 1
                     await response.add_reaction("✅")
                     break
-                else:
-                    await response.add_reaction("❌")
